@@ -1,0 +1,84 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+# deal with admin first
+RewriteCond %{REQUEST_URI} ^/no1exam/no1exam/(admin) 
+RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/no1exam/no1exam/backend/web/(assets|css)/  
+RewriteCond %{REQUEST_URI} ^/no1exam/no1exam/(admin) 
+RewriteRule ^.*$ backend/web/index.php [L]
+
+
+RewriteCond %{REQUEST_URI} ^/no1exam/no1exam/(assets|css)
+RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/no1exam/no1exam/(frontend|backend)/web/(assets|css)/ 
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ frontend/web/index.php
+
+
+#https://www.askapache.com/htaccess/http-https-rewriterule-redirect/
+##RewriteCond %{SERVER_PORT}s ^(443(s)|[0-9]+s)$
+##RewriteRule ^(.*)$ - [env=askapache:%2]
+
+# redirect urls with index.html to folder
+##RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index.html HTTP/
+##RewriteRule ^(([^/]+/)*)index.html$ http%{ENV:askapache}://%{HTTP_HOST}/$1 [R=301,L]
+
+# change // to /
+##RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)//(.*) HTTP/ [NC]
+##RewriteRule ^.*$ http%{ENV:askapache}://%{HTTP_HOST}/%1/%2 [R=301,L]
+
+
+
+##RewriteCond %{HTTPS} =on
+##RewriteRule ^(.*)$ - [env=ps:https]
+##RewriteCond %{HTTPS} !=on
+##RewriteRule ^(.*)$ - [env=ps:http]
+
+# redirect urls with index.html to folder
+##RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index.html HTTP/ [NC]
+##RewriteRule ^.*$ %{ENV:ps}://%{SERVER_NAME}/%1 [R=301,L]
+
+# change // to /
+##RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)//(.*) HTTP/ [NC]
+##RewriteRule ^.*$ %{ENV:ps}://%{SERVER_NAME}/%1/%2 [R=301,L]
+
+
+
+
+###RewriteEngine On
+###RewriteBase /
+###RewriteCond %{HTTPS} !=on
+###RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index.html HTTP/ [NC]
+###RewriteRule ^.*$ http://%{SERVER_NAME}/%1 [R=301,L]
+
+###RewriteCond %{HTTPS} =on
+###RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index.html HTTP/ [NC]
+###RewriteRule ^.*$ https://%{SERVER_NAME}/%1 [R=301,L]
+
+###RewriteCond %{HTTPS} !=on
+###RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)//(.*) HTTP/ [NC]
+###RewriteRule ^.*$ http://%{SERVER_NAME}/%1/%2 [R=301,L]
+
+###RewriteCond %{HTTPS} =on
+###RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)//(.*) HTTP/ [NC]
+###RewriteRule ^.*$ https://%{SERVER_NAME}/%1/%2 [R=301,L]
+
+
+
+
+##Yii2 Htaccess
+
+##RewriteCond %{HTTPS} off
+##RewriteCond %{HTTP_HOST} ^www.(.*) [NC]
+##RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+##RewriteCond %{HTTPS} on
+##RewriteCond %{HTTP_HOST} ^www.(.*) [NC]
+##RewriteRule ^(.*)$ https://%1/$1 [R=301,L]

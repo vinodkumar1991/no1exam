@@ -1,0 +1,4 @@
+set foreign_key_checks = 0;
+alter table compitative_methods drop column total_users;
+alter table compitative_methods add column total_players tinyint(2) unsigned not null after negative_answer_value
+set foreign_key_checks = 1;
